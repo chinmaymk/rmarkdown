@@ -35,6 +35,9 @@ var rmarkdown = (function() {
     var lineNo = 0;
 
     self._sourceDiv.addEventListener('keydown', sourceDivKeyDown);
+    self._sourceDiv.addEventListener('mousedown', function(evt) {
+      evt.stopPropagation();
+    });
     self._div.addEventListener('mousedown', divMouseDown);
 
     /**
