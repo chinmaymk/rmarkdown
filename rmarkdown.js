@@ -94,6 +94,10 @@ var rmarkdown = (function() {
       setTimeout(function() {
         self.placeCaretAtEnd(ele.firstChild);
       }, 200);
+
+      ele.firstChild.addEventListener('mousedown', function(evt) {
+        evt.stopPropagation();
+      }, true);
     }
 
     /**
@@ -116,6 +120,8 @@ var rmarkdown = (function() {
     function replaceHtml() {
       var m = marked(this.textContent);
       self._lines[lineNo] = this.textContent;
+      //remove attached events
+      ele.firstChild = null;
       ele.innerHTML = m;
     }
 
