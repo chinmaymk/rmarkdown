@@ -4,7 +4,7 @@ rmarkdown
 A real time markdown editor which seamlessly merges your markdown into html.
 
 ##Installation
-Grab the zip from github, copy `dist/rmarkdown.min.js` to your js folder and refer it from you page. Dependencies are marked, and if you like syntax highlighting refer highlight.js
+Grab the zip from github, copy `dist/rmarkdown.min.js` to your js folder and refer it from you page. Only dependency is [marked](https://github.com/chjj/marked), and if you like syntax highlighting refer [highlight.js](https://highlightjs.org/)
 
 ```html
 <script src="http://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js"></script>
