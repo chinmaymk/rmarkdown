@@ -22,7 +22,15 @@ Grab the zip from github, copy `dist/rmarkdown.min.js` to your js folder and ref
 ```
 That's about it.
 
-**Api**
+If you would like to remove the annoying border of contenteditable divs, use this css
+
+```css
+[contenteditable]:focus {
+  outline: none;
+}
+```
+
+**api**
 
 ```js
 var markdown = editor.markdown(); //returns markdown typed so far
