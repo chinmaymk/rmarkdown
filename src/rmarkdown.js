@@ -24,6 +24,7 @@ var rmarkdown = (function() {
     this._lines = [];
     //let the party begin!
     this.attachEvents();
+    this.placeCaretAtEnd(this._sourceDiv);
   }
 
   /**
