@@ -1,7 +1,7 @@
 rmarkdown
 =========
 
-Real time markdown to html. Written in pure javascript, no css, no jquery, no nothing, and really tiny - 942 bytes, compressed and minified.
+Instant markdown to html. Written in pure javascript, no css, no jquery, no nothing, and really tiny - 942 bytes, compressed and minified.
 
 ##Installation
 Grab the zip from github, copy `dist/rmarkdown.min.js` to your js folder and refer it from you page. Only dependency is [marked](https://github.com/chjj/marked), and if you like syntax highlighting refer [highlight.js](https://highlightjs.org/)
