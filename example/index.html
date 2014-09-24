@@ -15,7 +15,10 @@
     <script src='http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.2/highlight.min.js'></script>
     <script src='../dist/rmarkdown.min.js' type='text/javascript'></script>
     <script>
-      var a = new rmarkdown(document.getElementById('rmarkdown'));
+      var a = new rmarkdown({
+        el :document.getElementById('rmarkdown'),
+        value : '#This is markdown \n **no shit**'
+      });
     </script>
   </body>
 </html>

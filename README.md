@@ -38,10 +38,10 @@ var html = editor.html(); //returns markdown converted to html
 ```
 
 ##Todo
-1. Allow setting initial value through api
-2. Check on other browsers than chrome
-3. Write some tests
-4. Make it work on server
+- Allow setting initial value through api
+- Check on other browsers than chrome
+- Write some tests
+- Make it work on server
 
 ##Got suggestions ?
 Feel free to submit a pull request, file an issue, or get in touch on twitter [@_chinmaymk](https://twitter.com/_chinmaymk)

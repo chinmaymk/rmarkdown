@@ -1,6 +1,5 @@
 //TODO:
 //Handle default values
-//Save un entered changes on loose focus
 
 var rmarkdown = (function() {
   /**
@@ -8,20 +7,38 @@ var rmarkdown = (function() {
    * @param  {[type]} div [description]
    * @return {[type]}     [description]
    */
-  function rmarkdown(div) {
+  function rmarkdown(options) {
     //element for which we have to create markdown editor
-    this._div = div;
+    this._div = options.el;
     //create internal structure
     //source div is where actual markdown resides
     this._sourceDiv = document.createElement('div');
     this._sourceDiv.setAttribute('contenteditable', true);
-    this._sourceDiv.textContent = 'Type something for me';
+    this._sourceDiv.textContent = options.default || ' ';
     //html div is where generate markup resides
     this._htmlDiv = document.createElement('div');
     //add those things to main div
     this._div.appendChild(this._htmlDiv);
     this._div.appendChild(this._sourceDiv);
     this._lines = [];
+
+    //get the add line function
+    this.addLine = this.lineIterator();
+
+    if (options.value) {
+      var self = this;
+      options.value.split('\n').map(function(line) {
+        var ro = self.addLine(line);
+        //create a span to hold line no and avoid any distortions on page
+        var d = document.createElement('span');
+        d.setAttribute('data-line-no', ro.lineNo);
+        d.innerHTML = ro.html;
+        self.setEditListener(d);
+        self._htmlDiv.appendChild(d);
+      });
+
+    }
+
     //let the party begin!
     this.attachEvents();
     this.placeCaretAtEnd(this._sourceDiv);
@@ -33,7 +50,6 @@ var rmarkdown = (function() {
    */
   rmarkdown.prototype.attachEvents = function() {
     var self = this;
-    var lineNo = 0;
 
     self._sourceDiv.addEventListener('keydown', sourceDivKeyDown);
     self._sourceDiv.addEventListener('mousedown', function(evt) {
@@ -50,17 +66,16 @@ var rmarkdown = (function() {
       if (!self.isMyEvent(evt)) {
         return;
       }
+      var ro = self.addLine(self._sourceDiv.textContent);
 
-      var m = marked(self._sourceDiv.textContent);
-      self._lines[lineNo] = self._sourceDiv.textContent;
-
+      //create a span to hold line no and avoid any distortions on page
       var d = document.createElement('span');
-      d.setAttribute('data-line-no', lineNo);
-      d.innerHTML = m;
+      d.setAttribute('data-line-no', ro.lineNo);
+      d.innerHTML = ro.html;
       self.setEditListener(d);
       self._htmlDiv.appendChild(d);
+      //empty out the source div for further additions
       self._sourceDiv.textContent = '';
-      lineNo++;
     }
 
     /**
@@ -78,7 +93,17 @@ var rmarkdown = (function() {
      * @return {[type]} [description]
      */
     document.addEventListener('mousedown', function() {
+      var d = document.getElementById('my-god-editing');
+      if (!d) {
+        return;
+      }
 
+      var ele = d.parentNode;
+      var lineNo = ele.getAttribute('data-line-no');
+      self._lines[lineNo] = d.textContent;
+      var m = marked(d.textContent);
+      ele.firstChild = null;
+      ele.innerHTML = m;
     });
   };
 
@@ -181,6 +206,25 @@ var rmarkdown = (function() {
    */
   rmarkdown.prototype.isMyEvent = function(evt) {
     return evt.keyCode === 13 && !evt.shiftKey;
+  };
+
+  /**
+   * returns a function to add line
+   * @return {[type]} [description]
+   */
+  rmarkdown.prototype.lineIterator = function() {
+    var lineNo = 0;
+    var self = this;
+
+    return function addLine(value) {
+      var m = marked(value);
+      self._lines[lineNo] = value;
+      lineNo++;
+      return {
+        html: m,
+        lineNo: lineNo - 1
+      };
+    };
   };
 
   //don't forget the return!
