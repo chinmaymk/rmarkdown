@@ -93,17 +93,19 @@ var rmarkdown = (function() {
      * @return {[type]} [description]
      */
     document.addEventListener('mousedown', function() {
-      var d = document.getElementById('my-god-editing');
-      if (!d) {
+      var ele = document.getElementsByClassName('my-god-editing');
+      if (!ele) {
         return;
       }
 
-      var ele = d.parentNode;
-      var lineNo = ele.getAttribute('data-line-no');
-      self._lines[lineNo] = d.textContent;
-      var m = marked(d.textContent);
-      ele.firstChild = null;
-      ele.innerHTML = m;
+      ele.map(function(d) {
+        var ele = d.parentNode;
+        var lineNo = ele.getAttribute('data-line-no');
+        self._lines[lineNo] = d.textContent;
+        var m = marked(d.textContent);
+        ele.firstChild = null;
+        ele.innerHTML = m;
+      });
     });
   };
 
@@ -118,7 +120,7 @@ var rmarkdown = (function() {
      */
     function mouseDownEle(e) {
       e.stopPropagation();
-      ele.innerHTML = '<div contenteditable="true" id="my-god-editing">' + self._lines[lineNo] + '</div>';
+      ele.innerHTML = '<div contenteditable="true" class="my-god-editing">' + self._lines[lineNo] + '</div>';
       //Browser takes some time to render this HTML
       setTimeout(function() {
         self.placeCaretAtEnd(ele.firstChild);
