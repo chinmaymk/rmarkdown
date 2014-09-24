@@ -63,7 +63,9 @@
         <script src='http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.2/highlight.min.js'></script>
         <script type="text/javascript" src="https://rawgit.com/chinmaymk/rmarkdown/master/dist/rmarkdown.min.js"></script>
         <script type="text/javascript">
-        var editor = new rmarkdown(document.getElementById('rmarkdown'));
+        var editor = new rmarkdown({
+            el: document.getElementById('rmarkdown')
+        });
         </script>
     </body>
 </html>
