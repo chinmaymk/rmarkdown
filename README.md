@@ -41,8 +41,7 @@ var html = editor.html(); //returns markdown converted to html
 ```
 
 ##Todo
-- Allow setting initial value through api
-- Check on other browsers than chrome
+- Check on other browsers than chrome, they do exist
 - Write some tests
 - Make it work on server
 
